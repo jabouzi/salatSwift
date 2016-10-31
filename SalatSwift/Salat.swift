@@ -61,10 +61,10 @@ class Salat {
     var numIterations = 1;        // number of iterations needed to compute times
     
     
-    var lat: Double;        // latitude
-    var lng: Double;        // longitude
-    var timezone: Double;   // time-zone
-    var JDate: Double;      // Julian date
+    var lat: Double = 0.0;        // latitude
+    var lng: Double = 0.0;        // longitude
+    var timezone: Double = 0.0;   // time-zone
+    var JDate: Double = 0.0;      // Julian date
     
     
     //------------------- Calc Method Parameters --------------------
@@ -78,73 +78,85 @@ class Salat {
      is : isha selector (0 = angle; 1 = minutes after maghrib)
      iv : isha parameter value (in angle or minutes)
      */
-    var methodParams: [[Double]] = []
-    var prayerTimes = [Double]()
+    var methodParams: [[Double]] =
+        [
+            [
+                16.0,
+                0.0,
+                4.0,
+                0.0,
+                14.0
+            ],
+            [
+                18.0,
+                1.0,
+                0.0,
+                0.0,
+                18.0
+            ],
+            [
+                15.0,
+                1.0,
+                0.0,
+                0.0,
+                15.0
+            ],
+            [
+                18.0,
+                1.0,
+                0.0,
+                0.0,
+                17.0
+            ],
+            [
+                19.0,
+                1.0,
+                0.0,
+                1.0,
+                90.0
+            ],
+            [
+                19.5,
+                1.0,
+                0.0,
+                0.0,
+                17.5
+            ],
+            [
+                18.0,
+                1.0,
+                0.0,
+                0.0,
+                17.0
+            ],
+            [
+                17.7,
+                0.0,
+                4.5,
+                0.0,
+                15.0
+            ]
+    ]
+    //var prayerTimes = [Double]()
+    
+    var times: [Double] = [0,0,0,0,0,0,0];
+    var prayerTimes: [String] = ["","","","","","",""];
     
     init() {
-        
-        methodParams[0][0] = 16.0;
-        methodParams[0][1] = 0.0;
-        methodParams[0][2] = 4.0;
-        methodParams[0][3] = 0.0;
-        methodParams[0][4] = 14.0;
-        
-        methodParams[1][0] = 18.0;
-        methodParams[1][1] = 1.0;
-        methodParams[1][2] = 0.0;
-        methodParams[1][3] = 0.0;
-        methodParams[1][4] = 18.0;
-        
-        methodParams[2][0] = 15.0;
-        methodParams[2][1] = 1.0;
-        methodParams[2][2] = 0.0;
-        methodParams[2][3] = 0.0;
-        methodParams[2][4] = 15.0;
-        
-        methodParams[3][0] = 18.0;
-        methodParams[3][1] = 1.0;
-        methodParams[3][2] = 0.0;
-        methodParams[3][3] = 0.0;
-        methodParams[3][4] = 17.0;
-        
-        methodParams[4][0] = 19.0;
-        methodParams[4][1] = 1.0;
-        methodParams[4][2] = 0.0;
-        methodParams[4][3] = 1.0;
-        methodParams[4][4] = 90.0;
-        
-        methodParams[5][0] = 19.5;
-        methodParams[5][1] = 1.0;
-        methodParams[5][2] = 0.0;
-        methodParams[5][3] = 0.0;
-        methodParams[5][4] = 17.5;
-        
-        methodParams[6][0] = 18.0;
-        methodParams[6][1] = 1.0;
-        methodParams[6][2] = 0.0;
-        methodParams[6][3] = 0.0;
-        methodParams[6][4] = 17.0;
-        
-        methodParams[7][0] = 17.7;
-        methodParams[7][1] = 0.0;
-        methodParams[7][2] = 4.5;
-        methodParams[7][3] = 0.0;
-        methodParams[7][4] = 15.0;
         
 
     }
     
-    func getDatePrayerTimes(year: Int, month: Int, day: Int , latitude: Double , longitude: Double , timeZone: Double) -> [String]
+    func getDatePrayerTimes(year: inout Int, month: inout Int, day: Int , latitude: Double , longitude: Double , timeZone: Double)
     {
-        var prayerTimes: [String]
-        var lat = latitude;
-        var lng = longitude;
-        var timezone = timeZone;
+        lat = latitude;
+        lng = longitude;
+        timezone = timeZone;
         //timeZone = effectiveTimeZone(year, month, day, timeZone);
-        var JDate = julianDate(year, month, day)- longitude/ (15*24);
+        JDate = julianDate(year: &year, month: &month, day: day) - longitude / (15 * 24);
         computeDayTimes();
         
-        return prayerTimes;
+        //return prayerTimes;
     }
     
     // set the calculation method
@@ -169,7 +181,7 @@ class Salat {
     }
     
     // set the minutes after Sunset for calculating Maghrib
-    func setMaghribMinutes(minutes: Int)
+    /*func setMaghribMinutes(minutes: Int)
     {
         var customParams: [Int]
         customParams.insert(1, at: 1)
@@ -183,7 +195,7 @@ class Salat {
         var customParams: [Int]
         customParams.insert(1, at: 1)
         customParams.insert(minutes, at: 2)
-    }
+    }*/
     
     // set adjusting method for higher latitudes
     func setHighLatsMethod(methodID: Int)
@@ -204,26 +216,28 @@ class Salat {
             return InvalidTime;
         }
         else {
-            time = fixhour(time + 0.5 / 60);  // add 0.5 minutes to round
+            var temp: Double = (time + 0.5) / 60;
+            time = fixhour(a: &temp);  // add 0.5 minutes to round
             var hours: Double = floor(time);
             var minutes: Double = floor((time - hours) * 60);
-            return twoDigitsFormat(hours)+":"+twoDigitsFormat(minutes);
+            return twoDigitsFormat(num: Int(hours))+":"+twoDigitsFormat(num: Int(minutes));
         }
     }
     
     // convert float hours to 12h format
-    func floatToTime12( time: inout Double) -> String
+    func floatToTime12(time: inout Double) -> String
     {
         if (time.isNaN) {
             return InvalidTime;
         }
         else {
-            time = fixhour(time+0.5/60);  // add 0.5 minutes to round
+            var temp: Double = (time + 0.5) / 60;
+            time = fixhour(a: &temp);  // add 0.5 minutes to round
             var hours: Int = Int(time)
             var minutes: Int = ((Int(time)-hours)*60);
             var suffix: String = hours >= 12 ? " pm" : " am";
             hours = (hours + 12 - 1) % 12 + 1;
-            return _2String(hours)+":"+twoDigitsFormat(minutes)+suffix;
+            return "\(hours)" + twoDigitsFormat(num: minutes) + suffix;
         }
     }
     
@@ -238,15 +252,19 @@ class Salat {
     // compute declination angle of sun and equation of time
     func sunPosition(jd: Double, flag: Int) -> Double
     {
+        var temp: Double = 0;
         var D: Double = jd - 2451545.0;
-        var g: Double = fixangle(357.529 + 0.98560028*D);
-        var q: Double = fixangle(280.459 + 0.98564736*D);
-        var L: Double = fixangle(q + 1.915*dsin(g)+0.020*dsin(2*g));
+        temp = 357.529 + 0.98560028 * D;
+        var g: Double = fixangle(a: &temp);
+        temp = 280.459 + 0.98564736 * D;
+        var q: Double = fixangle(a: &temp);
+        temp = q + 1.915*dsin(d: g)+0.020*dsin(d: 2*g);
+        var L: Double = fixangle(a: &temp);
         //double R = 1.00014 - 0.01671* dcos(g) - 0.00014* dcos(2*g);
         var e: Double = 23.439 - 0.00000036*D;
-        var d: Double = darcsin(dsin(e)*dsin(L));
-        var RA: Double = darctan2(dcos(e)*dsin(L), dcos(L))/15;
-        RA = fixhour(RA);
+        var d: Double = darcsin(x: dsin(d: e)*dsin(d: L));
+        var RA: Double = darctan2(y: dcos(d: e)*dsin(d: L), x: dcos(d: L))/15;
+        RA = fixhour(a: &RA);
         var EqT: Double = q/15 - RA;
         //double * result = new double[2];
         if (flag == 0) {
@@ -270,26 +288,27 @@ class Salat {
     // compute mid-day (Dhuhr, Zawal) time
     func computeMidDay(t: Double) -> Double
     {
-        var T: Double = equationOfTime(jd: JDate + t);
-        var Z: Double = fixhour(12 - T);
+        var T: Double = equationOfTime(jd: (JDate + t));
+        var temp = 12 - T;
+        var Z: Double = fixhour(a: &temp);
         return Z;
     }
     
     // compute time for a given angle G
-    func computeTime(G: Double, t: Double)
+    func computeTime(G: Double, t: Double) -> Double
     {
-        var D: Double = sunDeclination(jd: JDate + t);
+        var D: Double = sunDeclination(jd: (JDate + t));
         var Z: Double = computeMidDay(t: t);
-        var V: Double = 1.0/15.0* darccos((-dsin(G)-dsin(D)*dsin(lat))/dcos(D)*dcos(lat)));
+        var V: Double = 1.0/15.0*darccos(x: (-dsin(d: G)-dsin(d: D)*dsin(d: lat))/dcos(d: D)*dcos(d: lat));
         return Z + (G > 90.0 ? -V : V);
     }
     
     // compute the time of Asr
-    double func computeAsr(int step, double t)  // Shafii: step=1, Hanafi: step=2
+    func computeAsr(step: Int, t: Double) -> Double // Shafii: step=1, Hanafi: step=2
     {
-    double D = sunDeclination(JDate+ t);
-    double G = -darccot(step+ dtan(abs(lat-D)));
-    return computeTime(G, t);
+        var D: Double = sunDeclination(jd: (JDate+t));
+        var G: Double = -darccot(x: Double(step) + dtan(d: abs(lat-D)));
+        return computeTime(G: G, t: t);
     }
     
     
@@ -297,117 +316,141 @@ class Salat {
     
     
     // compute prayer times at given julian date
-    void func computeTimes()
+    func computeTimes()
     {
-    dayPortion();
-    double Fajr    = computeTime(180.0 - methodParams[calcMethod][0], times[0]);
-    double Sunrise = computeTime(180.0 - 0.833, times[1]);
-    double Dhuhr   = computeMidDay(times[2]);
-    double Asr     = computeAsr(1.0 + asrJuristic, times[3]);
-    double Sunset  = computeTime(0.833, times[4]);;
-    double Maghrib = computeTime(methodParams[calcMethod][2], times[5]);
-    double Isha    = computeTime(methodParams[calcMethod][4], times[6]);
-    times[0] = Fajr;
-    times[1] = Sunrise;
-    times[2] = Dhuhr;
-    times[3] = Asr;
-    times[4] = Sunset;
-    times[5] = Maghrib;
-    times[6] = Isha;
+        dayPortion();
+        var Fajr: Double     = computeTime(G: 180.0 - methodParams[calcMethod][0], t: times[0]);
+        var Sunrise: Double  = computeTime(G: 180.0 - 0.833, t: times[1]);
+        var Dhuhr: Double    = computeMidDay(t: times[2]);
+        var Asr: Double      = computeAsr(step: Int(1.0 + asrJuristic), t: times[3]);
+        var Sunset: Double   = computeTime(G: 0.833, t: times[4]);
+        var Maghrib: Double  = computeTime(G: methodParams[calcMethod][2], t: times[5]);
+        var Isha: Double     = computeTime(G: methodParams[calcMethod][4], t: times[6]);
+        times[0] = Fajr;
+        times[1] = Sunrise;
+        times[2] = Dhuhr;
+        times[3] = Asr;
+        times[4] = Sunset;
+        times[5] = Maghrib;
+        times[6] = Isha;
     }
     
     
     // compute prayer times at given julian date
-    void func computeDayTimes()
+    func computeDayTimes()
     {
-    times[0] = 5.0;
-    times[1] = 6.0;
-    times[2] = 12.0;
-    times[3] = 13.0;
-    times[4] = 18.0;
-    times[5] = 18.0;
-    times[6] = 18.0; //default times
+        times[0] = 5.0;
+        times[1] = 6.0;
+        times[2] = 12.0;
+        times[3] = 13.0;
+        times[4] = 18.0;
+        times[5] = 18.0;
+        times[6] = 18.0; //default times
     
-    for (int i=1; i<=numIterations; i++)
-    computeTimes();
-    adjustTimes();
-    adjustTimesFormat();
+        for i in 1...numIterations
+        {
+            computeTimes();
+        }
+        
+        adjustTimes();
+        adjustTimesFormat();
     }
     
-    
     // adjust times in a prayer time array
-    void func adjustTimes()
+    func adjustTimes()
     {
-    for (int i=0; i<7; i++)
-    times[i] += timezone - lng/15.0;
-    times[2] += dhuhrMinutes/ 60.0; //Dhuhr
-    if (methodParams[calcMethod][1] == 1) // Maghrib
-    times[5] = times[4]+ methodParams[calcMethod][2]/ 60.0;
-    if (methodParams[calcMethod][3] == 1) // Isha
-    times[6] = times[5]+ methodParams[calcMethod][4]/ 60.0;
-    
-    if (adjustHighLats != None)
-    adjustHighLatTimes();
+        for i in 0 ..< 7
+        {
+            times[i] += timezone - lng/15.0;
+        }
+        times[2] += dhuhrMinutes / 60.0; //Dhuhr
+        
+        if (methodParams[calcMethod][1] == 1) { // Maghrib
+            times[5] = times[4] + methodParams[calcMethod][2] / 60.0;
+        }
+        
+        if (methodParams[calcMethod][3] == 1) { // Isha
+            times[6] = times[5] + methodParams[calcMethod][4] / 60.0;
+        }
+        
+        if (adjustHighLats != None) {
+            adjustHighLatTimes();
+        }
     }
     
     
     // convert times array to given time format
-    void func adjustTimesFormat()
+    func adjustTimesFormat()
     {
-    for (int i=0; i<7; i++)
-    if (timeFormat == Time12)
-    prayerTimes[i] = floatToTime12(times[i]);
-    /*else if (timeFormat == Time12NS)
-     timesF[i] = floatToTime12(times[i], true);*/
-    else
-    prayerTimes[i] = floatToTime24(times[i]);
+        var temp: Double = 0.0;
+        for i in 0 ..< 7 {
+            temp = times[i];
+            if (timeFormat == Time12) {
+                prayerTimes[i] = floatToTime12(time: &temp);
+            }
+                /*else if (timeFormat == Time12NS)
+                 timesF[i] = floatToTime12(times[i], true);*/
+            else {
+                prayerTimes[i] = floatToTime24(time: &temp);
+            }
+        }
     }
     
     
     // adjust Fajr, Isha and Maghrib for locations in higher latitudes
-    void func adjustHighLatTimes()
+    func adjustHighLatTimes()
     {
-    double nightTime = timeDiff(times[4], times[1]); // sunset to sunrise
+        var nightTime: Double = timeDiff(time1: times[4], time2: times[1]); // sunset to sunrise
     
-    // Adjust Fajr
-    double FajrDiff = nightPortion(methodParams[calcMethod][0])* nightTime;
-    if (isNaN(times[0]) || timeDiff(times[0], times[1]) > FajrDiff)
-    times[0] = times[1]- FajrDiff;
+        // Adjust Fajr
+        var FajrDiff: Double = nightPortion(angle: methodParams[calcMethod][0]) * nightTime;
+        if (times[0].isNaN || timeDiff(time1: times[0], time2: times[1]) > FajrDiff) {
+            times[0] = times[1] - FajrDiff;
+        }
     
-    // Adjust Isha
-    double IshaAngle = (methodParams[calcMethod][3] == 0) ? methodParams[calcMethod][4] : 18;
-    double IshaDiff = nightPortion(IshaAngle)* nightTime;
-    if (isNaN(times[6]) || timeDiff(times[4], times[6]) > IshaDiff)
-    times[6] = times[4]+ IshaDiff;
+        // Adjust Isha
+        var IshaAngle: Double = (methodParams[calcMethod][3] == 0) ? methodParams[calcMethod][4] : 18;
+        var IshaDiff: Double = nightPortion(angle: IshaAngle) * nightTime;
+        if (times[6].isNaN || timeDiff(time1: times[4], time2: times[6]) > IshaDiff) {
+            times[6] = times[4] + IshaDiff;
+        }
     
-    // Adjust Maghrib
-    double MaghribAngle = (methodParams[calcMethod][1] == 0) ? methodParams[calcMethod][2] : 4;
-    double MaghribDiff = nightPortion(MaghribAngle)* nightTime;
-    if (isNaN(times[5]) || timeDiff(times[4], times[5]) > MaghribDiff)
-    times[5] = times[4]+ MaghribDiff;
+        // Adjust Maghrib
+        var MaghribAngle: Double = (methodParams[calcMethod][1] == 0) ? methodParams[calcMethod][2] : 4;
+        var MaghribDiff: Double = nightPortion(angle: MaghribAngle) * nightTime;
+        if (times[5].isNaN || timeDiff(time1: times[4], time2: times[5]) > MaghribDiff) {
+            times[5] = times[4] + MaghribDiff;
+        }
     }
     
     
     // the night portion used for adjusting times in higher latitudes
-    double func nightPortion(double angle)
+    func nightPortion(angle: Double) -> Double
     {
-    double result = 0.0;
-    if (adjustHighLats == AngleBased)
-    result = 1.0/60.0* angle;
-    if (adjustHighLats == MidNight)
-    result = 1.0/2.0;
-    if (adjustHighLats == OneSeventh)
-    result = 1.0/7.0;
-    return result;
+        var result: Double = 0.0;
+        if (adjustHighLats == AngleBased) {
+            result = 1.0/60.0 * angle;
+        }
+        
+        if (adjustHighLats == MidNight) {
+            result = 1.0/2.0;
+        }
+        
+        if (adjustHighLats == OneSeventh) {
+            result = 1.0/7.0;
+        }
+        
+        return result;
     }
     
     
     // convert hours to day portions
-    void func dayPortion()
+    func dayPortion()
     {
-    for (int i=0; i<7; i++)
-    times[i] /= 24;
-    //return times;
+        for i in 0 ..< 7 {
+            times[i] /= 24;
+        }
+        //return times;
     }
     
     
@@ -416,47 +459,50 @@ class Salat {
     
     
     // compute the difference between two times
-    double func timeDiff(double time1, double time2)
+    func timeDiff(time1: Double, time2: Double) -> Double
     {
-    return fixhour(time2- time1);
+        var temp = time2 - time1;
+        return fixhour(a: &temp);
     }
     
     
     // add a leading 0 if necessary
-    string func twoDigitsFormat(int num)
+    func twoDigitsFormat(num: Int) -> String
     {
-    return (num <10) ? '0'+ _2String(num) : _2String(num);
+        return (num < 10) ? "0" + "\(num)" : "\(num)";
     }
     
-    bool func isNaN(double var)
+    /*func isNaN(_var: Double) -> Bool
     {
-    return (isnan(var) != 0);
-    }
+        return (isnan(_var) != 0);
+    }*/
     
     
     //---------------------- Julian Date Functions -----------------------
     
     
     // calculate julian date from a calendar date
-    double func julianDate(int year, int month, int day)
+    func julianDate(year: inout Int, month: inout Int, day: Int) -> Double
     {
-    if (month <= 2)
-    {
-    year -= 1;
-    month += 12;
-    }
-    double A = floor(year/ 100.0);
-    double B = 2.0 - A+ floor(A/ 4.0);
+        if (month <= 2)
+        {
+            year -= 1;
+            month += 12;
+        }
+        
+        var A: Double = floor(Double(year / 100));
+        var B: Double = 2.0 - A + floor(A / 4.0);
     
-    double JD = floor(365.25* (year+ 4716))+ floor(30.6001* (month+ 1))+ day+ B- 1524.5;
-    return JD;
+        var JD: Double = floor(365.25 * Double(year + 4716)) + floor(30.6001 * Double(month + 1));
+        JD += Double(day) + B - 1524.5;
+        return JD;
     }
     
     //---------------------- Time-Zone Functions -----------------------
     
     
     // compute local time-zone for a specific date
-    /*void func getTimeZone(date)
+    /*func getTimeZone(date)
      {
      double localDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
      double GMTstring = localDate.toGMTstring();
@@ -467,14 +513,14 @@ class Salat {
     
     
     // compute base time-zone of the system
-    /*void func getBaseTimeZone()
+    /*func getBaseTimeZone()
      {
      return getTimeZone(new Date(2000, 0, 15))
      }*/
     
     
     // detect daylight saving in a given date
-    /*void func detectDaylightSaving(date)
+    /*func detectDaylightSaving(date)
      {
      return getTimeZone(date) != getBaseTimeZone();
      }*/
@@ -492,105 +538,105 @@ class Salat {
     //---------------------- Trigonometric Functions -----------------------
     
     // degree sin
-    double func dsin(double d)
+    func dsin(d: Double) -> Double
     {
-    return sin(dtr(d));
+        return sin(dtr(d: d));
     }
     
     // degree cos
-    double func dcos(double d)
+    func dcos(d: Double) -> Double
     {
-    return cos(dtr(d));
+        return cos(dtr(d: d));
     }
     
     // degree tan
-    double func dtan(double d)
+    func dtan(d: Double) -> Double
     {
-    return tan(dtr(d));
+        return tan(dtr(d: d));
     }
     
     // degree arcsin
-    double func darcsin(double x)
+    func darcsin(x: Double) -> Double
     {
-    return rtd(asin(x));
+        return rtd(r: asin(x));
     }
     
     // degree arccos
-    double func darccos(double x)
+    func darccos(x: Double) -> Double
     {
-    return rtd(acos(x));
+        return rtd(r: acos(x));
     }
     
     // degree arctan
-    double func darctan(double x)
+    func darctan(x: Double) -> Double
     {
-    return rtd(atan(x));
+        return rtd(r: atan(x));
     }
     
     // degree arctan2
-    double func darctan2(double y, double x)
+    func darctan2(y: Double, x: Double) -> Double
     {
-    return rtd(atan2(y, x));
+        return rtd(r: atan2(y, x));
     }
     
     // degree arccot
-    double func darccot(double x)
+    func darccot(x: Double) -> Double
     {
-    return rtd(atan(1/x));
+        return rtd(r: atan(1/x));
     }
     
     // degree to radian
-    double func dtr(double d)
+    func dtr(d: Double) -> Double
     {
-    return (d * PI) / 180.0;
+        return (d * PI) / 180.0;
     }
     
     // radian to degree
-    double func rtd(double r)
+    func rtd(r: Double) -> Double
     {
-    return (r * 180.0) / PI;
+        return (r * 180.0) / PI;
     }
     
     // range reduce angle in degrees.
-    double func fixangle(double a)
+    func fixangle(a: inout Double) -> Double
     {
-    a = a - 360.0 * (floor(a / 360.0));
-    a = a < 0 ? a + 360.0 : a;
-    return a;
+        a = a - 360.0 * (floor(a / 360.0));
+        a = a < 0 ? a + 360.0 : a;
+        return a;
     }
     
     // range reduce hours to 0..23
-    double func fixhour(double a)
+    func fixhour(a: inout Double) -> Double
     {
-    a = a - 24.0 * (floor(a / 24.0));
-    a = a < 0 ? a + 24.0 : a;
-    return a;
+        a = a - 24.0 * (floor(a / 24.0));
+        a = a < 0 ? a + 24.0 : a;
+        return a;
     }
     
-    string func _2String(double number)
+    /*func _2String(double number) -> String
+    {
+        std::ostringstream ostr;
+        ostr << number;
+        return ostr.str();
+    }
+    
+    func _2String(int number) -> String
     {
     std::ostringstream ostr;
     ostr << number;
     return ostr.str();
-    }
+    }**/
     
-    string func _2String(int number)
-    {
-    std::ostringstream ostr;
-    ostr << number;
-    return ostr.str();
-    }
-    
-    void func debug(string* array)
+    /*func debug(string* array)
     {
     int numElements = sizeof(array)/sizeof(array[0]);
     for (int i = 0; i < numElements; i++) 
     cout << array[i];
     }
-    void func debug(int* array)
+    func debug(int* array)
     {
     int numElements = sizeof(array)/sizeof(array[0]);
     for (int i = 0; i < numElements; i++) 
     cout << array[i];
-    }
+    }*/
 }
