@@ -10,9 +10,13 @@ import Foundation
 
 var salat = Salat();
 
-var year: Int = 2016
-var month:Int = 10
-let day:Int = 31
+let date = Date();
+let calendar = Calendar.current;
+
+let year: Int = calendar.component(.year, from: date);
+let month:Int = calendar.component(.month, from: date);
+let day:Int = calendar.component(.day, from: date);
+
 let calcMethod:Int = 2;
 let asrMethod:Int = 0;
 let highLatitude:Int = 0;
@@ -25,6 +29,6 @@ salat.setAsrMethod(methodID: asrMethod);
 salat.setDhuhrMinutes(minutes: 0);
 salat.setHighLatsMethod(methodID: highLatitude);
 
-salat.getDatePrayerTimes(year: &year, month: &month, day: day, latitude: latitude, longitude: longitude, timeZone: timezone);
+salat.getDatePrayerTimes(year: year, month: month, day: day, latitude: latitude, longitude: longitude, timeZone: timezone);
 
 print(salat.prayerTimes);
