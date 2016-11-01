@@ -217,7 +217,7 @@ class Salat {
             return InvalidTime;
         }
         else {
-            var temp: Double = time + 0.5 / 60;
+            let temp: Double = time + 0.5 / 60;
             time = fixhour(_hour: temp);  // add 0.5 minutes to round
             let hours: Double = floor(time);
             let minutes: Double = floor((time - hours) * 60);
@@ -232,7 +232,7 @@ class Salat {
             return InvalidTime;
         }
         else {
-            var temp: Double = (time + 0.5) / 60;
+            let temp: Double = (time + 0.5) / 60;
             time = fixhour(_hour: temp);  // add 0.5 minutes to round
             var hours: Int = Int(time)
             let minutes: Int = ((Int(time)-hours)*60);
@@ -254,19 +254,19 @@ class Salat {
     func sunPosition(jd: Double, flag: Int) -> Double
     {
         var temp: Double = 0;
-        var D: Double = jd - 2451545.0;
+        let D: Double = jd - 2451545.0;
         temp = 357.529 + 0.98560028 * D;
-        var g: Double = fixangle(a: &temp);
+        let g: Double = fixangle(angle: temp);
         temp = 280.459 + 0.98564736 * D;
-        var q: Double = fixangle(a: &temp);
+        let q: Double = fixangle(angle: temp);
         temp = q + 1.915*dsin(d: g)+0.020*dsin(d: 2*g);
-        var L: Double = fixangle(a: &temp);
+        let L: Double = fixangle(angle: temp);
         //double R = 1.00014 - 0.01671* dcos(g) - 0.00014* dcos(2*g);
-        var e: Double = 23.439 - 0.00000036*D;
-        var d: Double = darcsin(x: dsin(d: e)*dsin(d: L));
+        let e: Double = 23.439 - 0.00000036*D;
+        let d: Double = darcsin(x: dsin(d: e)*dsin(d: L));
         var RA: Double = darctan2(y: dcos(d: e)*dsin(d: L), x: dcos(d: L))/15;
         RA = fixhour(_hour: RA);
-        var EqT: Double = q/15 - RA;
+        let EqT: Double = q/15 - RA;
         //double * result = new double[2];
         if (flag == 0) {
             return d;
@@ -289,26 +289,27 @@ class Salat {
     // compute mid-day (Dhuhr, Zawal) time
     func computeMidDay(t: Double) -> Double
     {
-        var T: Double = equationOfTime(jd: (JDate + t));
-        var temp = 12 - T;
-        var Z: Double = fixhour(_hour: temp);
+        let T: Double = equationOfTime(jd: (JDate + t));
+        let temp = 12 - T;
+        let Z: Double = fixhour(_hour: temp);
         return Z;
     }
     
     // compute time for a given angle G
     func computeTime(G: Double, t: Double) -> Double
     {
-        var D: Double = sunDeclination(jd: (JDate + t));
-        var Z: Double = computeMidDay(t: t);
-        var V: Double = 1.0/15.0*darccos(x: (-dsin(d: G)-dsin(d: D)*dsin(d: lat))/dcos(d: D)*dcos(d: lat));
+        let D: Double = sunDeclination(jd: (JDate + t));
+        let Z: Double = computeMidDay(t: t);
+        let V: Double = 1.0 / 15.0 * darccos(x: (-dsin(d: G) - dsin(d: D) * dsin(d: lat)) / (dcos(d: D) * dcos(d: lat)));
+        
         return Z + (G > 90.0 ? -V : V);
     }
     
     // compute the time of Asr
     func computeAsr(step: Int, t: Double) -> Double // Shafii: step=1, Hanafi: step=2
     {
-        var D: Double = sunDeclination(jd: (JDate+t));
-        var G: Double = -darccot(x: Double(step) + dtan(d: abs(lat-D)));
+        let D: Double = sunDeclination(jd: (JDate+t));
+        let G: Double = -darccot(x: Double(step) + dtan(d: abs(lat-D)));
         return computeTime(G: G, t: t);
     }
     
@@ -348,13 +349,15 @@ class Salat {
         times[5] = 18.0;
         times[6] = 18.0; //default times
     
-        for i in 1...numIterations
+        for _ in 1...numIterations
         {
             computeTimes();
         }
         
         adjustTimes();
         adjustTimesFormat();
+        
+        
     }
     
     // adjust times in a prayer time array
@@ -399,24 +402,24 @@ class Salat {
     // adjust Fajr, Isha and Maghrib for locations in higher latitudes
     func adjustHighLatTimes()
     {
-        var nightTime: Double = timeDiff(time1: times[4], time2: times[1]); // sunset to sunrise
+        let nightTime: Double = timeDiff(time1: times[4], time2: times[1]); // sunset to sunrise
     
         // Adjust Fajr
-        var FajrDiff: Double = nightPortion(angle: methodParams[calcMethod][0]) * nightTime;
+        let FajrDiff: Double = nightPortion(angle: methodParams[calcMethod][0]) * nightTime;
         if (times[0].isNaN || timeDiff(time1: times[0], time2: times[1]) > FajrDiff) {
             times[0] = times[1] - FajrDiff;
         }
     
         // Adjust Isha
-        var IshaAngle: Double = (methodParams[calcMethod][3] == 0) ? methodParams[calcMethod][4] : 18;
-        var IshaDiff: Double = nightPortion(angle: IshaAngle) * nightTime;
+        let IshaAngle: Double = (methodParams[calcMethod][3] == 0) ? methodParams[calcMethod][4] : 18;
+        let IshaDiff: Double = nightPortion(angle: IshaAngle) * nightTime;
         if (times[6].isNaN || timeDiff(time1: times[4], time2: times[6]) > IshaDiff) {
             times[6] = times[4] + IshaDiff;
         }
     
         // Adjust Maghrib
-        var MaghribAngle: Double = (methodParams[calcMethod][1] == 0) ? methodParams[calcMethod][2] : 4;
-        var MaghribDiff: Double = nightPortion(angle: MaghribAngle) * nightTime;
+        let MaghribAngle: Double = (methodParams[calcMethod][1] == 0) ? methodParams[calcMethod][2] : 4;
+        let MaghribDiff: Double = nightPortion(angle: MaghribAngle) * nightTime;
         if (times[5].isNaN || timeDiff(time1: times[4], time2: times[5]) > MaghribDiff) {
             times[5] = times[4] + MaghribDiff;
         }
@@ -461,7 +464,7 @@ class Salat {
     // compute the difference between two times
     func timeDiff(time1: Double, time2: Double) -> Double
     {
-        var temp = time2 - time1;
+        let temp = time2 - time1;
         return fixhour(_hour: temp);
     }
     
@@ -601,8 +604,9 @@ class Salat {
     }
     
     // range reduce angle in degrees.
-    func fixangle(a: inout Double) -> Double
+    func fixangle(angle: Double) -> Double
     {
+        var a = angle;
         a = a - 360.0 * (floor(a / 360.0));
         a = a < 0 ? a + 360.0 : a;
         return a;
@@ -612,7 +616,7 @@ class Salat {
     func fixhour(_hour: Double) -> Double
     {
         var a = _hour;
-        let f = 24.0 * (floor(a / 24.0));
+        _ = 24.0 * (floor(a / 24.0));
         a = a - (24.0 * (floor(a / 24.0)));
         a = a < 0 ? a + 24.0 : a;
         
