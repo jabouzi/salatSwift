@@ -1,0 +1,286 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D7FDDC891E2FB11D001ABD41 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FDDC881E2FB11D001ABD41 /* main.swift */; };
+		D7FDDC931E2FB15E001ABD41 /* Salat.m in Sources */ = {isa = PBXBuildFile; fileRef = D7FDDC921E2FB15E001ABD41 /* Salat.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D7FDDC831E2FB11D001ABD41 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		D7FDDC851E2FB11D001ABD41 /* SalatSwiftObjectiveC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SalatSwiftObjectiveC; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7FDDC881E2FB11D001ABD41 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		D7FDDC911E2FB15E001ABD41 /* Salat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Salat.h; sourceTree = "<group>"; };
+		D7FDDC921E2FB15E001ABD41 /* Salat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Salat.m; sourceTree = "<group>"; };
+		D7FDDC941E2FB173001ABD41 /* SalatBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SalatBridge.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D7FDDC821E2FB11D001ABD41 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D7FDDC7C1E2FB11D001ABD41 = {
+			isa = PBXGroup;
+			children = (
+				D7FDDC871E2FB11D001ABD41 /* SalatSwiftObjectiveC */,
+				D7FDDC861E2FB11D001ABD41 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D7FDDC861E2FB11D001ABD41 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D7FDDC851E2FB11D001ABD41 /* SalatSwiftObjectiveC */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D7FDDC871E2FB11D001ABD41 /* SalatSwiftObjectiveC */ = {
+			isa = PBXGroup;
+			children = (
+				D7FDDC8F1E2FB15E001ABD41 /* Bridge */,
+				D7FDDC901E2FB15E001ABD41 /* Objective-C */,
+				D7FDDC881E2FB11D001ABD41 /* main.swift */,
+			);
+			path = SalatSwiftObjectiveC;
+			sourceTree = "<group>";
+		};
+		D7FDDC8F1E2FB15E001ABD41 /* Bridge */ = {
+			isa = PBXGroup;
+			children = (
+				D7FDDC941E2FB173001ABD41 /* SalatBridge.h */,
+			);
+			path = Bridge;
+			sourceTree = "<group>";
+		};
+		D7FDDC901E2FB15E001ABD41 /* Objective-C */ = {
+			isa = PBXGroup;
+			children = (
+				D7FDDC911E2FB15E001ABD41 /* Salat.h */,
+				D7FDDC921E2FB15E001ABD41 /* Salat.m */,
+			);
+			path = "Objective-C";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D7FDDC841E2FB11D001ABD41 /* SalatSwiftObjectiveC */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7FDDC8C1E2FB11D001ABD41 /* Build configuration list for PBXNativeTarget "SalatSwiftObjectiveC" */;
+			buildPhases = (
+				D7FDDC811E2FB11D001ABD41 /* Sources */,
+				D7FDDC821E2FB11D001ABD41 /* Frameworks */,
+				D7FDDC831E2FB11D001ABD41 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SalatSwiftObjectiveC;
+			productName = SalatSwiftObjectiveC;
+			productReference = D7FDDC851E2FB11D001ABD41 /* SalatSwiftObjectiveC */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D7FDDC7D1E2FB11D001ABD41 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Skander Jabouzi";
+				TargetAttributes = {
+					D7FDDC841E2FB11D001ABD41 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 449ZVE3U99;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = D7FDDC801E2FB11D001ABD41 /* Build configuration list for PBXProject "SalatSwiftObjectiveC" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D7FDDC7C1E2FB11D001ABD41;
+			productRefGroup = D7FDDC861E2FB11D001ABD41 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D7FDDC841E2FB11D001ABD41 /* SalatSwiftObjectiveC */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D7FDDC811E2FB11D001ABD41 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7FDDC891E2FB11D001ABD41 /* main.swift in Sources */,
+				D7FDDC931E2FB15E001ABD41 /* Salat.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D7FDDC8A1E2FB11D001ABD41 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D7FDDC8B1E2FB11D001ABD41 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D7FDDC8D1E2FB11D001ABD41 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 449ZVE3U99;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/dev/Developments/Swift/SalatSwiftObjectiveC/SalatSwiftObjectiveC/Bridge/SalatBridge.h;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		D7FDDC8E1E2FB11D001ABD41 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 449ZVE3U99;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/dev/Developments/Swift/SalatSwiftObjectiveC/SalatSwiftObjectiveC/Bridge/SalatBridge.h;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D7FDDC801E2FB11D001ABD41 /* Build configuration list for PBXProject "SalatSwiftObjectiveC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7FDDC8A1E2FB11D001ABD41 /* Debug */,
+				D7FDDC8B1E2FB11D001ABD41 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D7FDDC8C1E2FB11D001ABD41 /* Build configuration list for PBXNativeTarget "SalatSwiftObjectiveC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7FDDC8D1E2FB11D001ABD41 /* Debug */,
+				D7FDDC8E1E2FB11D001ABD41 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D7FDDC7D1E2FB11D001ABD41 /* Project object */;
+}
